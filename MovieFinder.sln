@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36109.1 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieFinder.Mobile", "MovieFinder.Mobile\MovieFinder.Mobile.csproj", "{AE4380F3-1811-4AA7-A602-184AF819EB73}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C565D1A7-91A5-483A-AE45-A622CA7A607F} = {C565D1A7-91A5-483A-AE45-A622CA7A607F}
+		{C90501CC-7D21-41D2-BE63-429B9A6AC1FA} = {C90501CC-7D21-41D2-BE63-429B9A6AC1FA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieFinder.Logic", "MovieFinder.Logic\MovieFinder.Logic.csproj", "{C90501CC-7D21-41D2-BE63-429B9A6AC1FA}"
 EndProject
