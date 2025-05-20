@@ -1,4 +1,4 @@
-﻿namespace MovieFinder.Mobile
+﻿namespace MovieFinder.Mobile.Views
 {
     public partial class MainPage : ContentPage
     {
