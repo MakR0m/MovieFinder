@@ -2,6 +2,9 @@
 using MovieFinder.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
+using MovieFinder.Logic.Interfaces;
+using MovieFinder.Data.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MovieFinder.Mobile
 {
@@ -16,8 +19,8 @@ namespace MovieFinder.Mobile
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                })
-                .Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Filename=movies.db"));
+                });
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Filename=movies.db"));
 
 #if DEBUG
             builder.Logging.AddDebug();
