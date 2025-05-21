@@ -76,8 +76,7 @@
 
   <ItemGroup>
     <!-- Берём файл из Data-проекта и объявляем его MauiAsset -->
-    <MauiAsset Include="..\MovieFinder.Data\movies.db"
-               Link="movies.db" />
+    <MauiAsset Include="..\MovieFinder.Data\movies.db" Link="movies.db" />
   </ItemGroup>
 
 </Project>

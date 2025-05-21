@@ -1,13 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MovieFinder.Mobile.Views.MainPage">
-
+             x:Class="MovieFinder.Mobile.Views.MainPage"
+             xmlns:converters="clr-namespace:MovieFinder.Mobile.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:GenreToDisplayConverter x:Key="GenreToDisplayConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <CollectionView ItemsSource="{Binding Movies}">
+            <Entry Placeholder="Название фильма" Text="{Binding TitleFilter}"/>
+            <Picker Title="Жанр" 
+                    ItemsSource="{Binding Genres}" 
+                    SelectedItem ="{Binding SelectedGenre}" 
+                    ItemDisplayBinding="{Binding ., Converter={StaticResource GenreToDisplayConverter}}"/>
+            <Entry Placeholder="Имя актера" Text="{Binding ActorNameFilter}"/>
+            <Button Text="Поиск" Command="{Binding SearchMoviesCommand}"/>
+            <Button Text="Сбросить" Command="{Binding ResetFilterCommand}"/>
+            <CollectionView ItemsSource="{Binding Movies}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeThickness="1">
+                            <StackLayout>
+                                <Label Text="{Binding Title}"/>
+                                <Label Text="{Binding GenreDisplay}"/>
+                                <CollectionView ItemsSource="{Binding Actors}" SelectionMode="None" InputTransparent="True">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding FirstName}"/>
+                                                <Label Text="{Binding LastName}"/>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                    
+                                </CollectionView>
+                            </StackLayout>
+
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
                 
             </CollectionView>
         </VerticalStackLayout>
