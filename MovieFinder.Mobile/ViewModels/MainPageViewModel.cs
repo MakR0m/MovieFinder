@@ -13,14 +13,13 @@ namespace MovieFinder.Mobile.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         private readonly IMovieService _movieService;
-        private readonly PosterService _posterService;
+        private readonly PosterService _posterService = new PosterService();
 
         public ObservableCollection<MovieViewModel> Movies { get; } = new();
 
-        public MainPageViewModel(IMovieService movieService, PosterService posterService)
+        public MainPageViewModel(IMovieService movieService)
         {
             _movieService = movieService;
-            _posterService = posterService;
         }
 
     }

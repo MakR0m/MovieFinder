@@ -70,4 +70,8 @@
     <ProjectReference Include="..\MovieFinder.Logic\MovieFinder.Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Resources\Posters\posters.json" />
+  </ItemGroup>
+
 </Project>
