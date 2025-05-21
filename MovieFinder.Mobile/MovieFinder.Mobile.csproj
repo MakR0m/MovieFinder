@@ -70,8 +70,4 @@
     <ProjectReference Include="..\MovieFinder.Logic\MovieFinder.Logic.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
 </Project>
