@@ -29,5 +29,10 @@ namespace MovieFinder.Logic.Services
                     .Any(a => a.GetFullName().Contains(actorName, StringComparison.OrdinalIgnoreCase)));  //содержит указанную строку с именем актера без учета регистра
             return movies;
         }
+
+        public async Task<IEnumerable<MovieDto>> GetAllWithActorsAsync()   //Получить список фильмов с актерами
+        {
+            return await _repository.GetAllWithActorsAsync();             //Вызов метода получения списка фильмов с актерами из репозитория
+        }
     }
 }
