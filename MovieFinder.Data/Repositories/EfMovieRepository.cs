@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MovieFinder.Data.Repositories
 {
-    public class EfMovieRepository /*: IMovieRepository*/
+    public class EfMovieRepository : IMovieRepository
     {
         private readonly AppDbContext _context;
 
