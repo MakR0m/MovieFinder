@@ -74,4 +74,10 @@
     <Resource Include="Resources\Posters\posters.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Берём файл из Data-проекта и объявляем его MauiAsset -->
+    <MauiAsset Include="..\MovieFinder.Data\movies.db"
+               Link="movies.db" />
+  </ItemGroup>
+
 </Project>

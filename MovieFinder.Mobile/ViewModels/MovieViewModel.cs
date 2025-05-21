@@ -39,12 +39,15 @@ namespace MovieFinder.Mobile.ViewModels
         { 
             get => Movie.ActorList;
         }
+
+        public string ImagePath { get; }
         
 
-        public MovieViewModel(PosterService posterService, MovieDto movie)
+        public MovieViewModel(MovieDto movie, PosterService posterService)
         {
-            _posterService = posterService;
             Movie = movie;
+            _posterService = posterService;
+            ImagePath = _posterService.GetPosterPath(Title);
         }
     }
 }
