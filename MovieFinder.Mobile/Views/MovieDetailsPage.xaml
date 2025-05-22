@@ -9,7 +9,7 @@
         <vm:MovieDetailsPageViewModel />
     </ContentPage.BindingContext>
     <ScrollView Padding="20">
-        <VerticalStackLayout Spacing="15">
+        <VerticalStackLayout Spacing="20">
 
             <!-- Постер -->
             <Image Source="{Binding MovieVm.ImagePath}" Aspect="AspectFill" />
@@ -17,29 +17,32 @@
             <!-- Название -->
             <Label Text="{Binding MovieVm.Title}" FontSize="24" FontAttributes="Bold" />
 
-            <!-- Жанр -->
-            <Label Text="{Binding MovieVm.GenreDisplay}" FontSize="16" TextColor="Gray" />
-
-            <!-- Продолжительность -->
-            <Label Text="Продолжительность:" FontSize="14" FontAttributes="Bold" />
-            <Label Text="{Binding MovieVm.DurationMinutes}" FontSize="14" />
+            <!-- Жанр и продолжительность -->
+            <HorizontalStackLayout Spacing="20">
+                <Label Text="{Binding MovieVm.GenreDisplay}" FontSize="14" TextColor="Gray" />
+                <Label Text="{Binding MovieVm.DurationMinutes, StringFormat='{}{0} мин.'}" FontSize="14" TextColor="Gray" />
+            </HorizontalStackLayout>
 
             <!-- Описание -->
-            <Label Text="Описание:" FontSize="14" FontAttributes="Bold" />
-            <Label Text="{Binding MovieVm.Description}" FontSize="14" TextColor="Black" />
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Описание:" FontSize="14" FontAttributes="Bold" />
+                <Label Text="{Binding MovieVm.Description}" FontSize="14" TextColor="Black" LineBreakMode="WordWrap" />
+            </VerticalStackLayout>
 
             <!-- Актёры -->
-            <Label Text="Актёры:" FontSize="14" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding MovieVm.Actors}" SelectionMode="None">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding FullName}" FontSize="14" TextColor="Black" Margin="0,0,0,5" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Актёры:" FontSize="14" FontAttributes="Bold" />
+                <CollectionView ItemsSource="{Binding MovieVm.Actors}" SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding FullName}" FontSize="14" TextColor="Black" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>
