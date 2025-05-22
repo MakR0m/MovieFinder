@@ -1,12 +1,5 @@
 ﻿using MovieFinder.Logic.Extensions;
 using MovieFinder.Logic.Models;
-using MovieFinder.Mobile.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieFinder.Mobile.ViewModels
 {
@@ -51,14 +44,14 @@ namespace MovieFinder.Mobile.ViewModels
             } 
         }
 
-        public string ImagePath { get; } = string.Empty; //Путь к постеру
+        public string ImagePath { get; } = string.Empty;
         
         public double DurationMinutes
         { 
-            get => Movie.Duration.TotalMinutes;  //Забираем минуты
+            get => Movie.Duration.TotalMinutes;  
             set
             {
-                Movie.Duration = TimeSpan.FromMinutes(value); //Отдаем минуты
+                Movie.Duration = TimeSpan.FromMinutes(value);
                 OnPropertyChanged(nameof(DurationMinutes));
             }
         }

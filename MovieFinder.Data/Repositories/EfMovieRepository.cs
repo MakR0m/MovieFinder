@@ -3,11 +3,6 @@ using MovieFinder.Data.Data;
 using MovieFinder.Data.Entity;
 using MovieFinder.Logic.Interfaces;
 using MovieFinder.Logic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieFinder.Data.Repositories
 {
@@ -26,7 +21,7 @@ namespace MovieFinder.Data.Repositories
             return movies.Select(MapToDto).ToList(); // Преобразуем объекты - сущности в объекты бизнес логики. Select перебирает элементы и преобразует каждый объект в новый и возвращает список объектов.
         }
 
-        private static MovieDto MapToDto(Movie entity)
+        private static MovieDto MapToDto(Movie entity) //Маппер модели сущности в модель дто (бизнес-логики)
         {
             if (entity == null)
             {

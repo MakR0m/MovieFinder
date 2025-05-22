@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieFinder.Mobile.ViewModels
+﻿namespace MovieFinder.Mobile.ViewModels
 {
     [QueryProperty(nameof(MovieVm), "movie")]  // 1 атрибут - название свойства в текущем классе, 2 - ключ параметра навигации (ключ в словаре)
     public class MovieDetailsPageViewModel : ViewModelBase

@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieFinder.Data.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieFinder.Data.Data
 {
@@ -28,7 +23,7 @@ namespace MovieFinder.Data.Data
                 .HasMany(m => m.Actors)                // Один актер имеет много фильмов
                 .WithMany(a => a.Movies);             // Каждый фильм связан с множеством актеров
 
-            modelBuilder.Entity<Movie>()
+            modelBuilder.Entity<Movie>()              //Применение конвертера для задания типа int таблицы фильмов свойства Duration
                 .Property(m => m.Duration)
                 .HasConversion(secondsConverter)
                 .HasColumnType("INTEGER");

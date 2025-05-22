@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieFinder.Mobile.Views.MovieDetailsPage"
              xmlns:vm="clr-namespace:MovieFinder.Mobile.ViewModels"
-             Title="Информация о фильме">
+             Title="Информация о фильме"
+             Shell.NavBarIsVisible="False">
 
     <ContentPage.BindingContext>
         <vm:MovieDetailsPageViewModel />
@@ -12,7 +13,7 @@
         <VerticalStackLayout Spacing="20">
 
             <!-- Постер -->
-            <Image Source="{Binding MovieVm.ImagePath}" Aspect="AspectFill" />
+            <Image Source="{Binding MovieVm.ImagePath}" Aspect="AspectFill"/>
 
             <!-- Название -->
             <Label Text="{Binding MovieVm.Title}" FontSize="24" FontAttributes="Bold" />

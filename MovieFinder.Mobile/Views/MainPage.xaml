@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieFinder.Mobile.Views.MainPage"
-             xmlns:converters="clr-namespace:MovieFinder.Mobile.Converters">
+             xmlns:converters="clr-namespace:MovieFinder.Mobile.Converters"
+             Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:GenreToDisplayConverter x:Key="GenreToDisplayConverter" />
@@ -38,9 +39,9 @@
                     ItemDisplayBinding="{Binding ., Converter={StaticResource GenreToDisplayConverter}}"/>
             <Entry Placeholder="Имя актера" Text="{Binding ActorNameFilter}"/>
 
-            <HorizontalStackLayout Spacing="20">
-                <ImageButton Source="search_ico.png" Command="{Binding SearchMoviesCommand}" BorderColor="Black" BorderWidth="1"/>
-                <ImageButton Source="refresh_ico.png" Command="{Binding ResetFilterCommand}" BorderColor="Black" BorderWidth="1"/>
+            <HorizontalStackLayout Spacing="100" HorizontalOptions="Center">
+                <ImageButton Source="search_ico.png" MaximumWidthRequest="40" MaximumHeightRequest="40"  Command="{Binding SearchMoviesCommand}" />
+                <ImageButton Source="refresh_ico.png" MaximumWidthRequest="50" MaximumHeightRequest="50"  Command="{Binding ResetFilterCommand}" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
@@ -53,6 +54,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Stroke="LightGray"
+                            Style="{StaticResource SelectableItemBorder}"
                             StrokeThickness="1"
                             Padding="10"
                             Margin="0,5"

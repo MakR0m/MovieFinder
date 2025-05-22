@@ -1,15 +1,10 @@
 ﻿using MovieFinder.Logic.Extensions;
 using MovieFinder.Logic.Models;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieFinder.Mobile.Converters
 {
-    public class GenreToDisplayConverter : IValueConverter
+    public class GenreToDisplayConverter : IValueConverter  //Конвертер для отображения перечисления жанров на русском языке (по описанию)
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

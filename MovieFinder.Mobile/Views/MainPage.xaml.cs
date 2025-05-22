@@ -13,7 +13,7 @@ namespace MovieFinder.Mobile.Views
             BindingContext = _viewModel;
         }
 
-        protected override async void OnAppearing()
+        protected override async void OnAppearing() //Вызов асинхронного метода после загрузки страницы (вместо того, чтобы синхронно вызывать в конструкторе)
         {
             base.OnAppearing();
             await _viewModel.LoadAsync();

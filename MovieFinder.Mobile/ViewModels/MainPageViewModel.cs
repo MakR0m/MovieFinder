@@ -1,17 +1,9 @@
-﻿using Android.Graphics;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using MovieFinder.Data.Entity;
+﻿using CommunityToolkit.Mvvm.Input;
 using MovieFinder.Logic.Interfaces;
 using MovieFinder.Logic.Models;
 using MovieFinder.Mobile.Services;
 using MovieFinder.Mobile.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieFinder.Mobile.ViewModels
 {
@@ -97,12 +89,12 @@ namespace MovieFinder.Mobile.ViewModels
             get => _selectedMovie;
             set 
             {
-                if (_selectedMovie == value)        // 1) нет изменения — ничего не делаем
+                if (_selectedMovie == value)       
                     return;
                 _selectedMovie = value; 
                 OnPropertyChanged();
-                if (value is not null)              // 2) новое значение не null — открываем детали
-                    _ = OpenDetailsAsync(value);    // fire-and-forget, чтобы не блокировать UI
+                if (value != null)              
+                    _ = OpenDetailsAsync(value);    // fire-and-forget, чтобы не блокировать UI. Запускает асинхронный метод без ожидания завершения и предупреждения на отсутствие Task
             }
         }
 
@@ -135,7 +127,7 @@ namespace MovieFinder.Mobile.ViewModels
                 ["movie"] = movieVm
             };
             await Shell.Current.GoToAsync(nameof(MovieDetailsPage), parameters); //Переход на страницу информации о фильме с передачей объекта вьюмодели фильма
-            SelectedMovie = null; //Сброс выбор
+            SelectedMovie = null; //Сброс выбора
         }
 
 
@@ -145,7 +137,7 @@ namespace MovieFinder.Mobile.ViewModels
             foreach (var dto in moviesDto)
             {
                 var path = _posterService.GetPosterPath(dto.Title);
-                Movies.Add(new MovieViewModel(dto, path)); //Создание вьюмодели фильма на основе моделиДто и добавление в список
+                Movies.Add(new MovieViewModel(dto, path)); //Создание вью модели фильма на основе моделиДто и добавление в список
             }
         }
     }
