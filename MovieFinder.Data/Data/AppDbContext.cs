@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieFinder.Data.Entity;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,18 @@ namespace MovieFinder.Data.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var secondsConverter = new ValueConverter<TimeSpan, int>(    
+            v => (int)v.TotalSeconds,                                    //Хранить TimeSpan в секундах в int   
+            v => TimeSpan.FromSeconds(v));                               //Забирать int в TimeSpan в секундах
+
             modelBuilder.Entity<Movie>()
                 .HasMany(m => m.Actors)                // Один актер имеет много фильмов
                 .WithMany(a => a.Movies);             // Каждый фильм связан с множеством актеров
+
+            modelBuilder.Entity<Movie>()
+                .Property(m => m.Duration)
+                .HasConversion(secondsConverter)
+                .HasColumnType("INTEGER");
         }
     }
 }
