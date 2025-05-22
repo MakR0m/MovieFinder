@@ -11,6 +11,6 @@ namespace MovieFinder.Logic.Models
         public string FirstName {  get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
 
-        public string GetFullName() => $"{FirstName} {LastName}";
+        public string FullName { get => $"{FirstName} {LastName}".Trim(); }
     }
 }

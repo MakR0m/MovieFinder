@@ -8,7 +8,7 @@
     Title="MovieFinder.Mobile">
 
     <ShellContent
-        Title="Home"
+        Title="Киноафиша"
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
 

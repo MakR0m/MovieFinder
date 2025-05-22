@@ -57,6 +57,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiAsset Remove="Resources\Raw\posters.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\Posters\dark_knight.png" />
+	  <None Remove="Resources\Images\Posters\forrest_gump.png" />
+	  <None Remove="Resources\Images\Posters\inception.png" />
+	  <None Remove="Resources\Images\Posters\matrix.png" />
+	  <None Remove="Resources\Images\Posters\titanic.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Raw\posters.json">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.5" />
@@ -71,12 +89,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Posters\posters.json" />
+    <!-- Берём файл из Data-проекта и объявляем его MauiAsset -->
+    <MauiAsset Include="..\MovieFinder.Data\movies.db" Link="movies.db" />
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Берём файл из Data-проекта и объявляем его MauiAsset -->
-    <MauiAsset Include="..\MovieFinder.Data\movies.db" Link="movies.db" />
+    <MauiImage Include="Resources\Images\Posters\dark_knight.png" />
+    <MauiImage Include="Resources\Images\Posters\unknown.jpg" />
+    <MauiImage Include="Resources\Images\Posters\forrest_gump.png" />
+    <MauiImage Include="Resources\Images\Posters\inception.png" />
+    <MauiImage Include="Resources\Images\Posters\matrix.png" />
+    <MauiImage Include="Resources\Images\Posters\titanic.png" />
   </ItemGroup>
 
 </Project>

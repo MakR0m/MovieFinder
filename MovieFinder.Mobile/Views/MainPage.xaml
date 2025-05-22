@@ -8,44 +8,76 @@
             <converters:GenreToDisplayConverter x:Key="GenreToDisplayConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Кнопка фильтра -->
+            <RowDefinition Height="Auto"/>
+            <!-- Панель фильтра -->
+            <RowDefinition Height="*"/>
+            <!-- Коллекция фильмов -->
+        </Grid.RowDefinitions>
+
+        <!-- Кнопка-фильтр -->
+        <HorizontalStackLayout Grid.Row="0" Spacing="10">
+            <Label Text="Фильтр" FontSize="20" VerticalOptions="Center" />
+            <ImageButton Source="filter_ico.png" HeightRequest="24" WidthRequest="24"
+                         Command="{Binding ToggleFilterVisibilityCommand}"/>
+        </HorizontalStackLayout>
+
+        <!-- Панель фильтра -->
+        <VerticalStackLayout Grid.Row="1"
+                             IsVisible="{Binding IsFilterVisible}"
+                             Spacing="5"
+                             Padding="0,10">
             <Entry Placeholder="Название фильма" Text="{Binding TitleFilter}"/>
             <Picker Title="Жанр" 
                     ItemsSource="{Binding Genres}" 
                     SelectedItem ="{Binding SelectedGenre}" 
                     ItemDisplayBinding="{Binding ., Converter={StaticResource GenreToDisplayConverter}}"/>
             <Entry Placeholder="Имя актера" Text="{Binding ActorNameFilter}"/>
-            <Button Text="Поиск" Command="{Binding SearchMoviesCommand}"/>
-            <Button Text="Сбросить" Command="{Binding ResetFilterCommand}"/>
-            <CollectionView ItemsSource="{Binding Movies}" SelectionMode="Single">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border StrokeThickness="1">
-                            <StackLayout>
-                                <Label Text="{Binding Title}"/>
-                                <Label Text="{Binding GenreDisplay}"/>
+
+            <HorizontalStackLayout Spacing="20">
+                <ImageButton Source="search_ico.png" Command="{Binding SearchMoviesCommand}" BorderColor="Black" BorderWidth="1"/>
+                <ImageButton Source="refresh_ico.png" Command="{Binding ResetFilterCommand}" BorderColor="Black" BorderWidth="1"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!-- Список фильмов -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Movies}"
+                        SelectionMode="Single"
+                        Margin="0,20,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="LightGray"
+                            StrokeThickness="1"
+                            Padding="10"
+                            Margin="0,5"
+                            StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold"/>
+                            <Label Text="{Binding GenreDisplay}" FontSize="14" TextColor="DarkSlateGray"/>
+
+                            <!-- Актёры -->
+                            <HorizontalStackLayout Spacing="5">
+                                <Label Text="Актёры:" FontSize="13" TextColor="Gray" />
                                 <CollectionView ItemsSource="{Binding Actors}" SelectionMode="None" InputTransparent="True">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal"/>
+                                    </CollectionView.ItemsLayout>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding FirstName}"/>
-                                                <Label Text="{Binding LastName}"/>
-                                            </StackLayout>
+                                            <Label Text="{Binding FullName}" FontSize="13" TextColor="Gray" Margin="0,0,5,0"/>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
-                                    
                                 </CollectionView>
-                            </StackLayout>
-
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
-
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

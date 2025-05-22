@@ -20,9 +20,24 @@ namespace MovieFinder.Mobile.ViewModels
 
         public ObservableCollection<MovieViewModel> Movies { get; } = new();
 
-        public ObservableCollection<Genre> Genres { get; } = new ObservableCollection<Genre>(Enum.GetValues(typeof(Genre)).Cast<Genre>());
 
-        private Genre? _selectedGenre;
+
+        #region Filters
+
+        private bool isFilterVisible;         // Флаг отображения фильтров
+        public bool IsFilterVisible          
+        {
+            get => isFilterVisible;
+            set
+            {
+                isFilterVisible = value;
+                OnPropertyChanged(nameof(IsFilterVisible));
+            }
+        }
+
+        public List<Genre> Genres { get; } = new List<Genre>(Enum.GetValues(typeof(Genre)).Cast<Genre>()); //Список жанров для выбора в фильтре
+
+        private Genre? _selectedGenre;  // Выбранный жанр
         public Genre? SelectedGenre
         {
             get => _selectedGenre;
@@ -33,7 +48,7 @@ namespace MovieFinder.Mobile.ViewModels
             }
         }
 
-        private string _titleFilter = string.Empty;
+        private string _titleFilter = string.Empty; //Название фильма для фильтра
         public string TitleFilter
         {
             get => _titleFilter;
@@ -44,7 +59,7 @@ namespace MovieFinder.Mobile.ViewModels
             }
         }
 
-        private string _actorNameFilter = string.Empty;
+        private string _actorNameFilter = string.Empty; //Имя актера для фильтра
         public string ActorNameFilter
         {
             get => _actorNameFilter;
@@ -54,28 +69,9 @@ namespace MovieFinder.Mobile.ViewModels
                 OnPropertyChanged(nameof(ActorNameFilter));
             }
         }
-        
-
-        public MainPageViewModel(IMovieService movieService)
-        {
-            _movieService = movieService;
-        }
-
-        public async Task LoadAsync()
-        {
-            var moviesDto = await _movieService.GetAllWithActorsAsync();
-            MoviesToMoviesVM(moviesDto);
-        }
 
         [RelayCommand]
-        public async Task SearchMovies()
-        {
-            var moviesDto = await _movieService.SearchMoviesAsync(TitleFilter, SelectedGenre, ActorNameFilter);
-            MoviesToMoviesVM(moviesDto);
-        }
-
-        [RelayCommand]
-        public async Task ResetFilter()
+        public async Task ResetFilter()  //Сбросить фильтр
         {
             SelectedGenre = null;
             ActorNameFilter = string.Empty;
@@ -83,8 +79,36 @@ namespace MovieFinder.Mobile.ViewModels
             await LoadAsync();
         }
 
+        [RelayCommand]
+        public async Task ToggleFilterVisibility() //Скрыть фильтр
+        {
+            IsFilterVisible = !IsFilterVisible;
+            if (!IsFilterVisible)
+                await ResetFilter();
+        }
 
-        private void MoviesToMoviesVM(IEnumerable<MovieDto> moviesDto)
+        #endregion
+
+
+        public MainPageViewModel(IMovieService movieService)
+        {
+            _movieService = movieService;
+        }
+
+        public async Task LoadAsync() //Загрузить фильмы
+        {
+            var moviesDto = await _movieService.GetAllWithActorsAsync();
+            MoviesToMoviesVM(moviesDto);
+        }
+
+        [RelayCommand]
+        public async Task SearchMovies() //Найти фильмы по фильтру
+        {
+            var moviesDto = await _movieService.SearchMoviesAsync(TitleFilter, SelectedGenre, ActorNameFilter);
+            MoviesToMoviesVM(moviesDto);
+        }
+
+        private void MoviesToMoviesVM(IEnumerable<MovieDto> moviesDto) //Маппинг модели MovieDto в MovieViewModel
         {
             Movies.Clear();
             foreach (var movie in moviesDto)

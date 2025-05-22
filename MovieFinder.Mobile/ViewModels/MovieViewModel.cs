@@ -12,11 +12,11 @@ namespace MovieFinder.Mobile.ViewModels
 {
     public class MovieViewModel : ViewModelBase
     {
-        private readonly PosterService _posterService;
+        private readonly PosterService _posterService; //Сервис для определения пути к постеру фильма по названию
 
-        public MovieDto Movie { get;}
+        public MovieDto Movie { get;} //Модель дто
 
-        public string Title
+        public string Title  //Название и прокидка свойства вью модели до свойства дто
         {
             get => Movie.Title;
             set
@@ -26,7 +26,7 @@ namespace MovieFinder.Mobile.ViewModels
             }
         }
 
-        public string Description
+        public string Description //Описание фильма и прокидка свойства вью модели до свойства дто
         {
             get => Movie.Description;
             set
@@ -36,13 +36,13 @@ namespace MovieFinder.Mobile.ViewModels
             }
         }
 
-        public List<ActorDto> Actors
+        public List<ActorDto> Actors //Список актеров
         { 
             get => Movie.ActorList;
         }
 
-        public string GenreDisplay => Movie.Genre.GetDescription();
-        public Genre Genre 
+        public string GenreDisplay => Movie.Genre.GetDescription(); //Описание жанра на русском языке для отображения
+        public Genre Genre //Жанр и прокидка свойства вью модели до свойства дто
         { 
             get => Movie.Genre; 
             set 
@@ -53,14 +53,14 @@ namespace MovieFinder.Mobile.ViewModels
             } 
         }
 
-        public string ImagePath { get; }
+        public string ImagePath { get; } //Путь к постеру
         
 
         public MovieViewModel(MovieDto movie, PosterService posterService)
         {
             Movie = movie;
             _posterService = posterService;
-            ImagePath = _posterService.GetPosterPath(Title);
+            ImagePath = _posterService.GetPosterPath(Title); //Получить путь к постеру PosterService классом
         }
     }
 }

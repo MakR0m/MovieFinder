@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -20,17 +21,22 @@ namespace MovieFinder.Mobile.Services
         {
             try
             {
-                var jsonPath = Path.Combine(AppContext.BaseDirectory, "Resources", "Data", "posters.json");
+                var assembly = typeof(PosterService).Assembly; 
+                var resourceName = "MovieFinder.Mobile.Resources.Raw.posters.json";
 
-                if (!File.Exists(jsonPath))
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                if (stream == null)
                     return;
 
-                var json = File.ReadAllText(jsonPath);
+                using var reader = new StreamReader(stream);
+                var json = reader.ReadToEnd();
                 var posters = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
 
                 if (posters != null)
+                {
                     foreach (var poster in posters)
                         _posterMap[poster.Key] = poster.Value;
+                }
             }
             catch
             {
@@ -42,7 +48,7 @@ namespace MovieFinder.Mobile.Services
         {
             return _posterMap.TryGetValue(title, out var path)  // Если название фильма есть в словаре, то вернуть путь, иначе default.jpg
                 ? Path.Combine("Resources", "Posters", path)
-                : Path.Combine("Resources", "Posters", "default.jpg");
+                : Path.Combine("Resources", "Posters", "unknown.jpg");
         }
     }
 }

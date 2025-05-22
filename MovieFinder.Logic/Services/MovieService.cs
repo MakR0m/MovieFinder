@@ -26,7 +26,7 @@ namespace MovieFinder.Logic.Services
                 movies = movies.Where(m => m.Genre == genre.Value);
             if (!string.IsNullOrWhiteSpace (actorName))
                 movies = movies.Where(m => m.ActorList                                                    //Вернуть список фильмов у которых список актеров
-                    .Any(a => a.GetFullName().Contains(actorName, StringComparison.OrdinalIgnoreCase)));  //содержит указанную строку с именем актера без учета регистра
+                    .Any(a => a.FullName.Contains(actorName, StringComparison.OrdinalIgnoreCase)));  //содержит указанную строку с именем актера без учета регистра
             return movies;
         }
 
