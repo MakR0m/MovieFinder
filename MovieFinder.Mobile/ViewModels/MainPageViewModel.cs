@@ -128,6 +128,7 @@ namespace MovieFinder.Mobile.ViewModels
             };
             await Shell.Current.GoToAsync(nameof(MovieDetailsPage), parameters); //Переход на страницу информации о фильме с передачей объекта вьюмодели фильма
             SelectedMovie = null; //Сброс выбора
+            await ResetFilter(); //Сброс фильтров
         }
 
 
