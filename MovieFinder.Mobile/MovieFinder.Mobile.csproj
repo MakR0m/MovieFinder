@@ -102,4 +102,10 @@
     <MauiImage Include="Resources\Images\Posters\titanic.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <MauiXaml Update="Views\MovieDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Android.Graphics;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MovieFinder.Data.Entity;
 using MovieFinder.Logic.Interfaces;
 using MovieFinder.Logic.Models;
 using MovieFinder.Mobile.Services;
+using MovieFinder.Mobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +18,7 @@ namespace MovieFinder.Mobile.ViewModels
     public partial class MainPageViewModel : ViewModelBase
     {
         private readonly IMovieService _movieService;
-        private readonly PosterService _posterService = new();
+        private readonly PosterService _posterService;
 
         public ObservableCollection<MovieViewModel> Movies { get; } = new();
 
@@ -89,10 +91,26 @@ namespace MovieFinder.Mobile.ViewModels
 
         #endregion
 
+        private MovieViewModel? _selectedMovie;
+        public MovieViewModel? SelectedMovie
+        {
+            get => _selectedMovie;
+            set 
+            {
+                if (_selectedMovie == value)        // 1) нет изменения — ничего не делаем
+                    return;
+                _selectedMovie = value; 
+                OnPropertyChanged();
+                if (value is not null)              // 2) новое значение не null — открываем детали
+                    _ = OpenDetailsAsync(value);    // fire-and-forget, чтобы не блокировать UI
+            }
+        }
 
-        public MainPageViewModel(IMovieService movieService)
+
+        public MainPageViewModel(IMovieService movieService, PosterService posterService)
         {
             _movieService = movieService;
+            _posterService = posterService;
         }
 
         public async Task LoadAsync() //Загрузить фильмы
@@ -102,18 +120,32 @@ namespace MovieFinder.Mobile.ViewModels
         }
 
         [RelayCommand]
-        public async Task SearchMovies() //Найти фильмы по фильтру
+        private async Task SearchMovies() //Найти фильмы по фильтру
         {
             var moviesDto = await _movieService.SearchMoviesAsync(TitleFilter, SelectedGenre, ActorNameFilter);
             MoviesToMoviesVM(moviesDto);
         }
 
+        [RelayCommand]
+        private async Task OpenDetailsAsync(MovieViewModel movieVm)
+        {
+            // один и тот же экземпляр MovieViewModel передаётся в словаре
+            var parameters = new Dictionary<string, object>
+            {
+                ["movie"] = movieVm
+            };
+            await Shell.Current.GoToAsync(nameof(MovieDetailsPage), parameters); //Переход на страницу информации о фильме с передачей объекта вьюмодели фильма
+            SelectedMovie = null; //Сброс выбор
+        }
+
+
         private void MoviesToMoviesVM(IEnumerable<MovieDto> moviesDto) //Маппинг модели MovieDto в MovieViewModel
         {
             Movies.Clear();
-            foreach (var movie in moviesDto)
+            foreach (var dto in moviesDto)
             {
-                Movies.Add(new MovieViewModel(movie, _posterService));
+                var path = _posterService.GetPosterPath(dto.Title);
+                Movies.Add(new MovieViewModel(dto, path)); //Создание вьюмодели фильма на основе моделиДто и добавление в список
             }
         }
     }

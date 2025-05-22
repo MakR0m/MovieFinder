@@ -47,6 +47,7 @@
         <!-- Список фильмов -->
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Movies}"
+                        SelectedItem="{Binding SelectedMovie}"
                         SelectionMode="Single"
                         Margin="0,20,0,0">
             <CollectionView.ItemTemplate>

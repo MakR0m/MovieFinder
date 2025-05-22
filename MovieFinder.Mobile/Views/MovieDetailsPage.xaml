@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieFinder.Mobile.Views.MovieDetailsPage"
+             xmlns:vm="clr-namespace:MovieFinder.Mobile.ViewModels"
+             Title="Информация о фильме">
+
+    <ContentPage.BindingContext>
+        <vm:MovieDetailsPageViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="15">
+
+            <!-- Постер -->
+            <Image Source="{Binding MovieVm.ImagePath}" Aspect="AspectFill" />
+
+            <!-- Название -->
+            <Label Text="{Binding MovieVm.Title}" FontSize="24" FontAttributes="Bold" />
+
+            <!-- Жанр -->
+            <Label Text="{Binding MovieVm.GenreDisplay}" FontSize="16" TextColor="Gray" />
+
+            <!-- Продолжительность -->
+            <Label Text="Продолжительность:" FontSize="14" FontAttributes="Bold" />
+            <Label Text="{Binding MovieVm.DurationMinutes}" FontSize="14" />
+
+            <!-- Описание -->
+            <Label Text="Описание:" FontSize="14" FontAttributes="Bold" />
+            <Label Text="{Binding MovieVm.Description}" FontSize="14" TextColor="Black" />
+
+            <!-- Актёры -->
+            <Label Text="Актёры:" FontSize="14" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding MovieVm.Actors}" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding FullName}" FontSize="14" TextColor="Black" Margin="0,0,0,5" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

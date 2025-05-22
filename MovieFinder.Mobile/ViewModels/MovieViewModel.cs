@@ -12,8 +12,6 @@ namespace MovieFinder.Mobile.ViewModels
 {
     public class MovieViewModel : ViewModelBase
     {
-        private readonly PosterService _posterService; //Сервис для определения пути к постеру фильма по названию
-
         public MovieDto Movie { get;} //Модель дто
 
         public string Title  //Название и прокидка свойства вью модели до свойства дто
@@ -53,14 +51,22 @@ namespace MovieFinder.Mobile.ViewModels
             } 
         }
 
-        public string ImagePath { get; } //Путь к постеру
+        public string ImagePath { get; } = string.Empty; //Путь к постеру
         
+        public double DurationMinutes
+        { 
+            get => Movie.Duration.TotalMinutes;  //Забираем минуты
+            set
+            {
+                Movie.Duration = TimeSpan.FromMinutes(value); //Отдаем минуты
+                OnPropertyChanged(nameof(DurationMinutes));
+            }
+        }
 
-        public MovieViewModel(MovieDto movie, PosterService posterService)
+        public MovieViewModel(MovieDto movie, string path)
         {
             Movie = movie;
-            _posterService = posterService;
-            ImagePath = _posterService.GetPosterPath(Title); //Получить путь к постеру PosterService классом
+            ImagePath = path;
         }
     }
 }
