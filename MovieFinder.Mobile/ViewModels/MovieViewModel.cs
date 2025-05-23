@@ -23,7 +23,7 @@ namespace MovieFinder.Mobile.ViewModels
             set
             {
                 Movie.Description = value;
-                OnPropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(Description));
             }
         }
 

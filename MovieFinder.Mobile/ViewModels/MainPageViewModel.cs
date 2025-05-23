@@ -2,6 +2,7 @@
 using MovieFinder.Logic.Interfaces;
 using MovieFinder.Logic.Models;
 using MovieFinder.Mobile.Services;
+using MovieFinder.Mobile.Services.Interfaces;
 using MovieFinder.Mobile.Views;
 using System.Collections.ObjectModel;
 
@@ -10,7 +11,7 @@ namespace MovieFinder.Mobile.ViewModels
     public partial class MainPageViewModel : ViewModelBase
     {
         private readonly IMovieService _movieService;
-        private readonly PosterService _posterService;
+        private readonly IPosterService _posterService;
 
         public ObservableCollection<MovieViewModel> Movies { get; } = new();
 
@@ -18,13 +19,13 @@ namespace MovieFinder.Mobile.ViewModels
 
         #region Filters
 
-        private bool isFilterVisible;         // Флаг отображения фильтров
+        private bool _isFilterVisible;         // Флаг отображения фильтров
         public bool IsFilterVisible          
         {
-            get => isFilterVisible;
+            get => _isFilterVisible;
             set
             {
-                isFilterVisible = value;
+                _isFilterVisible = value;
                 OnPropertyChanged(nameof(IsFilterVisible));
             }
         }
@@ -99,7 +100,7 @@ namespace MovieFinder.Mobile.ViewModels
         }
 
 
-        public MainPageViewModel(IMovieService movieService, PosterService posterService)
+        public MainPageViewModel(IMovieService movieService, IPosterService posterService)
         {
             _movieService = movieService;
             _posterService = posterService;

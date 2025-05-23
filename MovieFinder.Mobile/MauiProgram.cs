@@ -8,6 +8,7 @@ using MovieFinder.Logic.Services;
 using MovieFinder.Mobile.ViewModels;
 using MovieFinder.Mobile.Views;
 using MovieFinder.Mobile.Services;
+using MovieFinder.Mobile.Services.Interfaces;
 
 namespace MovieFinder.Mobile
 {
@@ -40,7 +41,7 @@ namespace MovieFinder.Mobile
             builder.Services.TryAddScoped<IMovieService, MovieService>(); //Один экземпляр на время жизни DbContext
             builder.Services.TryAddTransient<MainPageViewModel>(); //Каждый раз при обращении к MainPageViewModel создается новый экземпляр. Привязка в xaml вызывает дефолт конструктор без параметров, а нам нужны зависимости
             builder.Services.AddSingleton<MainPage>(); //Создает экземпляр MainPage в конструкторе которого создается MainPageViewModel
-            builder.Services.AddSingleton<PosterService>(); //Создает единственный экземпляр постер сервис, внедряет его в MainPageViewModel
+            builder.Services.AddSingleton<IPosterService,PosterService>(); //Создает единственный экземпляр постер сервис, внедряет его в MainPageViewModel
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
