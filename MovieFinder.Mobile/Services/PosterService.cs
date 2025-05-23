@@ -1,8 +1,9 @@
-﻿using System.Text.Json;
+﻿using MovieFinder.Mobile.Services.Interfaces;
+using System.Text.Json;
 
 namespace MovieFinder.Mobile.Services
 {
-    public class PosterService  // Сервис для определения пути к посетру фильма по названию
+    public class PosterService : IPosterService // Сервис для определения пути к постеру фильма по названию
     {
         private readonly Dictionary<string, string> _posterMap = new();
 

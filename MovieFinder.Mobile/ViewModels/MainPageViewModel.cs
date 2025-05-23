@@ -94,8 +94,8 @@ namespace MovieFinder.Mobile.ViewModels
                     return;
                 _selectedMovie = value; 
                 OnPropertyChanged();
-                if (value != null)              
-                    _ = OpenDetailsAsync(value);    // fire-and-forget, чтобы не блокировать UI. Запускает асинхронный метод без ожидания завершения и предупреждения на отсутствие Task
+                if (value != null && OpenDetailsCommand.CanExecute(value))
+                    OpenDetailsCommand.ExecuteAsync(value);
             }
         }
 
