@@ -45,7 +45,7 @@ MovieFinder — кроссплатформенное мобильное прил
 - MovieFinder.Mobile — MAUI UI, ViewModel, View, DI, Shell.
 - MovieFinder.Logic — DTO, сервисы поиска, интерфейсы.
 - MovieFinder.Data — EF Core контекст, репозиторий, миграции, модели.
-- MovieFinder.Tests — unit-тесты MovieService.
+- MovieFinder.Tests — unit-тесты MovieService + интеграционные тесты EfMovieRepository
 - README - описание решения.
 
 Технические зависимости:
