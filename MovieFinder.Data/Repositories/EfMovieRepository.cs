@@ -38,6 +38,26 @@ namespace MovieFinder.Data.Repositories
             };
         }
 
+        public async Task<IEnumerable<MovieDto>> SearchMoviesAsync(string? title, Genre? genre, string? actorName)
+        {
+            var query = _context.Movies
+                .Include(m => m.Actors)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(title))
+                query = query.Where(m => EF.Functions.Like(m.Title, $"%{title}%"));
+
+            if (genre.HasValue)
+                query = query.Where(m => m.Genre == genre.Value.ToString());
+
+            if (!string.IsNullOrWhiteSpace(actorName))
+                query = query.Where(m => m.Actors.Any(a => EF.Functions.Like((a.FirstName + " " + a.LastName), $"%{actorName}%")));
+
+            var result = await query.ToListAsync();
+
+            return result.Select(MapToDto).ToList();
+        }
+
         private static ActorDto MapToDto(Actor entity)
         {
             if (entity == null)

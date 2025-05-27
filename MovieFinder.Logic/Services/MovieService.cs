@@ -12,17 +12,9 @@ namespace MovieFinder.Logic.Services
             _repository = repository;
         }
 
-        public async Task<IEnumerable<MovieDto>> SearchMoviesAsync(string? tittle, Genre? genre, string? actorName)
+        public async Task<IEnumerable<MovieDto>> SearchMoviesAsync(string? title, Genre? genre, string? actorName)
         {
-            var movies = await _repository.GetAllWithActorsAsync();
-            if (!string.IsNullOrWhiteSpace(tittle)) 
-                movies = movies.Where(m => m.Title.Contains(tittle, StringComparison.OrdinalIgnoreCase));  // Вернуть фильмы в название которых содержит указанную строку без учета регистра
-            if (genre.HasValue)
-                movies = movies.Where(m => m.Genre == genre.Value);
-            if (!string.IsNullOrWhiteSpace (actorName))
-                movies = movies.Where(m => m.ActorList                                                    //Вернуть список фильмов у которых список актеров
-                    .Any(a => a.FullName.Contains(actorName, StringComparison.OrdinalIgnoreCase)));  //содержит указанную строку с именем актера без учета регистра
-            return movies;
+            return await _repository.SearchMoviesAsync(title, genre, actorName);
         }
 
         public async Task<IEnumerable<MovieDto>> GetAllWithActorsAsync()   //Получить список фильмов с актерами
